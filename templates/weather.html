@@ -1,0 +1,28 @@
+<!-- templates/weather.html -->
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+<title>Weather App</title>
+</head>
+<body>
+	<div class="container">
+	<h1>Weather App</h1>
+    <form method="POST" action="/">
+        <input type="text" name="city" placeholder="Enter city name" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather_data %}
+        <h2>Weather Information for {{ weather_data['name'] }}, {{ weather_data['sys']['country'] }}</h2>
+        <p>Temperature: {{ weather_data['main']['temp'] }} °C</p>
+        <p>Weather: {{ weather_data['weather'][0]['description'] }}</p>
+    {% endif %}
+	</div>
+</body>
+</html>
+
