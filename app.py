@@ -8,6 +8,10 @@ app = Flask(__name__)
 # Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
 API_KEY = '83196fbc57763187a3cab13e3bcd1e59'
 BASE_URL = 'http://api.openweathermap.org/data/2.5/weather'
+<<<<<<< HEAD
+=======
+app = Flask(__name__, static_url_path='/static')
+>>>>>>> 8dbc6fa (changes in html css and app.py files)
 
 
 def get_weather_data(city_name):
