@@ -1,4 +1,4 @@
-def syntax_test(code_str):
+def test_syntax(code_str):
     try:
         compile(code_str, '<string>', 'exec')
         print("Syntax is valid.")
@@ -53,4 +53,4 @@ if __name__ == '__main__':
 """
 
 # Call the syntax_test function with the app.py code
-syntax_test(app_code)
+test_syntax(app_code)
