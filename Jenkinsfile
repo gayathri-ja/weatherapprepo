@@ -7,7 +7,9 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout your source code from version control
-                git url: 'https://github.com/gayathri-ja/weatherapprepo.git', credentialsId: 'gayathri-ja'
+                git url: 'https://github.com/gayathri-ja/weatherapprepo.git', 
+                    credentialsId: '1b5ef133-eaa9-4d11-97c5-82329c8aa60c',
+                    branch: 'main'
             }
         }
 
