@@ -1,56 +1,67 @@
-def test_syntax(code_str):
+def test_syntax():
     try:
-        compile(code_str, '<string>', 'exec')
-        print("Syntax is valid.")
+        with open('app.py', 'r') as f:
+            code_str = f.read()
+            compile(code_str, '<string>', 'exec')
+        assert True
     except SyntaxError as e:
-        print(f"Syntax Error: {e}")
+        assert False, f"Syntax Error: {e}"
     except Exception as e:
-        print(f"An error occurred: {e}")
+        assert False, f"An error occurred: {e}"
 
-# Your app.py script
-app_code = """
-import os
-import requests
-from flask import Flask, render_template, request
+# def test_syntax(code_str):
+#     try:
+#         compile(code_str, '<string>', 'exec')
+#         print("Syntax is valid.")
+#     except SyntaxError as e:
+#         print(f"Syntax Error: {e}")
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
 
-app = Flask(__name__)
+# # Your app.py script
+# app_code = """
+# import os
+# import requests
+# from flask import Flask, render_template, request
 
-# Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
-API_KEY = '83196fbc57763187a3cab13e3bcd1e59'
-BASE_URL = 'http://api.openweathermap.org/data/2.5/weather'
-app = Flask(__name__, static_url_path='/static')
+# app = Flask(__name__)
 
-def get_weather_data(city_name):
-    try:
-        params = {'q': city_name, 'appid': API_KEY, 'units': 'metric'}
-        response = requests.get(BASE_URL, params=params)
-        response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
-        data = response.json()
-        return data
-    except requests.exceptions.HTTPError as http_err:
-        print(f"HTTP error occurred: {http_err}")
-        return None
-    except Exception as err:
-        print(f"An error occurred: {err}")
-        return None
+# # Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
+# API_KEY = '83196fbc57763187a3cab13e3bcd1e59'
+# BASE_URL = 'http://api.openweathermap.org/data/2.5/weather'
+# app = Flask(__name__, static_url_path='/static')
 
-@app.route('/', methods=['GET', 'POST'])
-def weather_app():
-    weather_data = None
-    error_message = None
+# def get_weather_data(city_name):
+#     try:
+#         params = {'q': city_name, 'appid': API_KEY, 'units': 'metric'}
+#         response = requests.get(BASE_URL, params=params)
+#         response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+#         data = response.json()
+#         return data
+#     except requests.exceptions.HTTPError as http_err:
+#         print(f"HTTP error occurred: {http_err}")
+#         return None
+#     except Exception as err:
+#         print(f"An error occurred: {err}")
+#         return None
 
-    if request.method == 'POST':
-        city = request.form['city']
-        weather_data = get_weather_data(city)
+# @app.route('/', methods=['GET', 'POST'])
+# def weather_app():
+#     weather_data = None
+#     error_message = None
 
-        if not weather_data:
-            error_message = "City not found or API request failed. Please try again."
+#     if request.method == 'POST':
+#         city = request.form['city']
+#         weather_data = get_weather_data(city)
 
-    return render_template('weather.html', weather_data=weather_data, error_message=error_message)
+#         if not weather_data:
+#             error_message = "City not found or API request failed. Please try again."
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
-"""
+#     return render_template('weather.html', weather_data=weather_data, error_message=error_message)
+
+# if __name__ == '__main__':
+#     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+# """
 
 # Call the syntax_test function with the app.py code
 test_syntax(app_code)
