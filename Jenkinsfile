@@ -21,14 +21,14 @@ pipeline {
                 }
 
                 // Build your Docker image with the version number
-                sh "docker build -t weatherappnew:${buildVersion} ."
+                sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
             }
         }
 
         stage('Unit Test') {
             steps {
                 // Run your unit tests inside the Docker container
-                sh "docker run --rm weatherappnew:${buildVersion} pytest test_app.py"
+                sh "docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
             }
         }
 
@@ -36,15 +36,15 @@ pipeline {
             steps {
                 DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                // Push the Docker image to a container registry (Optional)/
-                sh "docker push weatherappnew:${buildVersion}"
+                // Push the Docker image to a container registry 
+                sh 'docker push gayathrija/weatherappdev:${buildVersion}'
                         
                 // Log in to Docker Hub using the credentials
-                sh "docker login -u ${} -p ${DOCKERHUB_CREDENTIALS_PSW}"
+                
                 
                 // Push the Docker image to a container registry
                 
-                sh "docker push gayathrija/weatherappdev:${buildVersion}"
+               
 
                 // Deploy the application using the Docker image
                 // You might use Docker Compose, Kubernetes, or other deployment methods based on your setup.
