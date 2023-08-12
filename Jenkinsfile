@@ -33,11 +33,11 @@ pipeline {
         }
 
         stage('push') {
-        steps {
-        script {
-            DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
-            DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
-            DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
+            steps {
+                script {
+                    DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
+                    DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
+                    DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
         }
 
         // Log in to Docker Hub using the credentials
@@ -47,22 +47,16 @@ pipeline {
         sh "docker push gayathrija/weatherappdev:${buildVersion}"
 
         }
-    environment {
-        IMAGE_NAME = 'weatherapp_prodsrv'
-        IMAGE_TAG = 'weatherapp_prodsrv'
-        AWS_INSTANCE_IP = '52.14.216.119'
-        AWS_INSTANCE_USER = 'root' // Replace with your instance's SSH user
-        SSH_PRIVATE_KEY = credentials('key-00adf693162fa12dd')
-    }
+
     stages('deploy') {
         stage('Pull Image and Deploy to AWS EC2') {
             steps {
                 script {
                     // Log in to the AWS EC2 instance using SSH
                     sshagent(credentials: ['key-00adf693162fa12dd']) {
-                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${AWS_INSTANCE_USER}@${AWS_INSTANCE_IP} 'docker pull ${IMAGE_NAME}:${IMAGE_TAG}'"
-                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${AWS_INSTANCE_USER}@${AWS_INSTANCE_IP} 'docker stop ${IMAGE_NAME} || true && docker rm ${IMAGE_NAME} || true'"
-                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${AWS_INSTANCE_USER}@${AWS_INSTANCE_IP} 'docker run -d --name ${IMAGE_NAME} -p 80:80 ${IMAGE_NAME}:${IMAGE_TAG}'" 
+                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${root}@${52.14.216.119} 'docker pull ${weatherapp_prodsrv}:${weatherapp_prodsrv}'"
+                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${root}@${52.14.216.119} 'docker stop ${weatherapp_prodsrv} || true && docker rm ${weatherapp_prodsrv} || true'"
+                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${root}@${52.14.216.119} 'docker run -d --name ${weatherapp_prodsrv} -p 80:80 ${weatherapp_prodsrv}:${weatherapp_prodsrv}'" 
                         }
                     }
                 }        
