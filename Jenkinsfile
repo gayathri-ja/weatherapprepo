@@ -54,9 +54,9 @@ pipeline {
                 script {
                     // Log in to the AWS EC2 instance using SSH
                     sshagent(credentials: ['key-00adf693162fa12dd']) {
-                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${root}@${52.14.216.119} 'docker pull ${weatherapp_prodsrv}:${weatherapp_prodsrv}'"
-                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${root}@${52.14.216.119} 'docker stop ${weatherapp_prodsrv} || true && docker rm ${weatherapp_prodsrv} || true'"
-                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${root}@${52.14.216.119} 'docker run -d --name ${weatherapp_prodsrv} -p 80:80 ${weatherapp_prodsrv}:${weatherapp_prodsrv}'" 
+                        sh "ssh -o StrictHostKeyChecking=no -i $key-00adf693162fa12dd ${root}@${52.14.216.119} 'docker pull ${weatherapp_prodsrv}:${weatherapp_prodsrv}'"
+                        sh "ssh -o StrictHostKeyChecking=no -i $key-00adf693162fa12dd ${root}@${52.14.216.119} 'docker stop ${weatherapp_prodsrv} || true && docker rm ${weatherapp_prodsrv} || true'"
+                        sh "ssh -o StrictHostKeyChecking=no -i $key-00adf693162fa12dd ${root}@${52.14.216.119} 'docker run -d --name ${weatherapp_prodsrv} -p 80:80 ${weatherapp_prodsrv}:${weatherapp_prodsrv}'" 
                             }
                         }
                     }        
