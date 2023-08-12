@@ -34,15 +34,17 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                DOCKERHUB_CREDENTIALS = credentials('docker-hub-credentials')
+                DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 // Push the Docker image to a container registry (Optional)
                 sh "docker push weatherappnew:${buildVersion}"
-        
+                        
                 // Log in to Docker Hub using the credentials
-                sh "docker login -u ${DOCKERHUB_CREDENTIALS_USR} -p ${DOCKERHUB_CREDENTIALS_PSW}"
+                sh "docker login -u ${} -p ${DOCKERHUB_CREDENTIALS_PSW}"
                 
                 // Push the Docker image to a container registry
-                sh "docker push weatherappnew:${buildVersion}
+                
+                sh "docker push gayathrija/weatherappdev:${buildVersion}"
 
                 // Deploy the application using the Docker image
                 // You might use Docker Compose, Kubernetes, or other deployment methods based on your setup.
