@@ -33,16 +33,25 @@ pipeline {
         }
 
         stage('push') {
-            steps {
-                script {
-                    DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
-                }
+        script {
+            DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
+        }
+
+        // Log in to Docker Hub using the credentials
+        sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
+
+        // Push the Docker image to a container registry
+        sh "docker push gayathrija/weatherappdev:${buildVersion}"
+           // steps {
+             //   script {
+               //     DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
+                //}
                 
                 // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+                //sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
 
                 // Push the Docker image to a container registry 
-                sh 'docker push gayathrija/weatherappdev:${buildVersion}'
+                //sh 'docker push gayathrija/weatherappdev:${buildVersion}'
                         
                 // Log in to Docker Hub using the credentials
                 
