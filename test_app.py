@@ -64,4 +64,4 @@ def test_syntax():
 # """
 
 # Call the syntax_test function with the app.py code
-test_syntax(app_code)
+# test_syntax(app_code)
