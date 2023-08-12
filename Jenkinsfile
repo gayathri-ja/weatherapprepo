@@ -46,9 +46,10 @@ pipeline {
         // Push the Docker image to a container registry
         sh "docker push gayathrija/weatherappdev:${buildVersion}"
 
+            }
         }
 
-    stage('deploy') {
+        stage('deploy') {
             steps {
                 script {
                     // Log in to the AWS EC2 instance using SSH
@@ -62,4 +63,3 @@ pipeline {
                 }
             }    
         }   
-    }
