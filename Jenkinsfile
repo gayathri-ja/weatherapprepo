@@ -36,6 +36,8 @@ pipeline {
         steps {
         script {
             DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
+            DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
+            DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
         }
 
         // Log in to Docker Hub using the credentials
