@@ -6,6 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo 'Checkout...'
                 // Checkout your source code from version control
                 git url: 'https://github.com/gayathri-ja/weatherapprepo.git', 
                     credentialsId: '1b5ef133-eaa9-4d11-97c5-82329c8aa60c',
