@@ -32,7 +32,7 @@ pipeline {
             }
         }
 
-        stage('push') {
+        stage('Push') {
             steps {
                 script {
                     DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
