@@ -33,6 +33,7 @@ pipeline {
         }
 
         stage('push') {
+        steps {
         script {
             DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
         }
@@ -63,6 +64,7 @@ pipeline {
                 // Deploy the application using the Docker image
                 // You might use Docker Compose, Kubernetes, or other deployment methods based on your setup.
                 // Here's an example using Docker Compose:
+        }
                 
             }
         }
