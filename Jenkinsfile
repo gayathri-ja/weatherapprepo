@@ -16,6 +16,7 @@ pipeline {
 
         stage('Build') {
             steps {
+                echo 'Build...'
                 // Generate a timestamp-based version number for the Docker image.
                 script {
                     buildVersion = new Date().format('yyyyMMdd-HHmmss')
