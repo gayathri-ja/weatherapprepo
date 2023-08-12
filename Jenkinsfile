@@ -46,8 +46,27 @@ pipeline {
         // Push the Docker image to a container registry
         sh "docker push gayathrija/weatherappdev:${buildVersion}"
 
-        }
-                
-        }
+            }   
+        }    
+    environment {
+        IMAGE_NAME = 'weatherapp_prodsrv'
+        IMAGE_TAG = 'weatherapp_prodsrv'
+        AWS_INSTANCE_IP = '52.14.216.119'
+        AWS_INSTANCE_USER = 'root' // Replace with your instance's SSH user
+        SSH_PRIVATE_KEY = credentials('key-00adf693162fa12dd')
+    }
+    stages('deploy') {
+        stage('Pull Image and Deploy to AWS EC2') {
+            steps {
+                script {
+                    // Log in to the AWS EC2 instance using SSH
+                    sshagent(credentials: ['key-00adf693162fa12dd']) {
+                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${AWS_INSTANCE_USER}@${AWS_INSTANCE_IP} 'docker pull ${IMAGE_NAME}:${IMAGE_TAG}'"
+                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${AWS_INSTANCE_USER}@${AWS_INSTANCE_IP} 'docker stop ${IMAGE_NAME} || true && docker rm ${IMAGE_NAME} || true'"
+                        sh "ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ${AWS_INSTANCE_USER}@${AWS_INSTANCE_IP} 'docker run -d --name ${IMAGE_NAME} -p 80:80 ${IMAGE_NAME}:${IMAGE_TAG}'"        
+                 }
+             }
+        }            
     }         
-}
+}        
+       
