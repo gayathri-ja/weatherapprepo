@@ -36,7 +36,7 @@ pipeline {
             steps {
                 DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                // Push the Docker image to a container registry (Optional)
+                // Push the Docker image to a container registry (Optional)/
                 sh "docker push weatherappnew:${buildVersion}"
                         
                 // Log in to Docker Hub using the credentials
