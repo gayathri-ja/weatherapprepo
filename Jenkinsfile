@@ -69,12 +69,12 @@ pipeline {
                 
                 sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
                 
-                sh """
-                    ssh -o StrictHostKeyChecking=no -i ${REMOTE_SSH_KEY} ${REMOTE_USER}@${REMOTE_HOST} \
+                sh '''
+                    ssh -o StrictHostKeyChecking=no -i "${REMOTE_SSH_KEY}" ${REMOTE_USER}@${REMOTE_HOST} \
                         "docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true; \
                         docker pull ${DOCKER_IMAGE_NAME}; \
                         docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}"
-                """
+                '''
             }
         }
 
