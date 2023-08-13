@@ -63,12 +63,12 @@ pipeline {
                     DOCKER_IMAGE_NAME = 'gayathrija/weatherappdev:${buildVersion}'
                     DOCKER_CONTAINER_NAME = 'gayathrija/weatherappdev'
                 }
-                    sh """
+                    sh '''
                         ssh -o StrictHostKeyChecking=no -i ${REMOTE_SSH_KEY} ${REMOTE_USER}@${REMOTE_HOST} '
                             docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true;
                             docker pull ${DOCKER_IMAGE_NAME}:${buildVersion};
                             docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}:${buildVersion}'
-                    """
+                    '''
             }
         }
     }        
