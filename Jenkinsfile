@@ -57,12 +57,18 @@ pipeline {
             steps {
                 echo "Deploy..."
                 script {
+                    DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
+                    DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
+                    DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
                     REMOTE_HOST = '52.14.216.119'
                     REMOTE_USER = 'root'
                     REMOTE_SSH_KEY = credentials('00adf693162fa12dd')
                     DOCKER_IMAGE_NAME = "gayathrija/weatherappdev:${buildVersion}"
-                    DOCKER_CONTAINER_NAME = 'gayathrija_weatherappdev'
+                    DOCKER_CONTAINER_NAME = 'gayathrija_weatherappdev'        
                 }
+                
+                sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
+                
                 sh '''
                     ssh -o StrictHostKeyChecking=no -i "${REMOTE_SSH_KEY}" ${REMOTE_USER}@${REMOTE_HOST} \
                         "docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true; \
