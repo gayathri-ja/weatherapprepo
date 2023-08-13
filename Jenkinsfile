@@ -53,8 +53,9 @@ pipeline {
             }
         }
 
-        stage('deploy') {
+        stage('Deploy') {
             steps {
+                echo "Deploy..."
                 script {
                     // Log in to the AWS EC2 instance using SSH
                     withCredentials([sshUserPrivateKey(credentialsId: '00adf693162fa12dd', keyFileVariable: 'SSH_KEY')]) {
