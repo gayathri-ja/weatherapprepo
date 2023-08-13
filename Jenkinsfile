@@ -16,7 +16,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Build...'
+                echo "Build..."
                 // Generate a timestamp-based version number for the Docker image.
                 script {
                     buildVersion = new Date().format('yyyyMMdd-HHmmss')
@@ -29,6 +29,7 @@ pipeline {
 
         stage('Unit Test') {
             steps {
+                echo "Unit Test..."
                 // Run your unit tests inside the Docker container
                 sh "docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
             }
@@ -36,6 +37,7 @@ pipeline {
 
         stage('Push') {
             steps {
+                echo "Push..."
                 script {
                     DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
                     DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
