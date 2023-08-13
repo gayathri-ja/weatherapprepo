@@ -57,23 +57,19 @@ pipeline {
             steps {
                 echo "Deploy..."
                 script {
-                    // Define your variables here
-                    def root = 'your-ec2-root-user'
-                    def ec2IP = '52.14.216.119'
-                    def weatherapp_prodsrv = 'your-weatherapp-prodsrv-name'
-
-                    // Load SSH key
-                    withCredentials([sshUserPrivateKey(credentialsId: '00adf693162fa12dd', keyFileVariable: 'SSH_KEY')]) {
-                        sh """  
-                        eval \$(ssh-agent -s)
-                        ssh-add \${SSH_KEY} 
-                        ssh -o StrictHostKeyChecking=no -i \${SSH_KEY} \${root}@\${ec2IP} 'docker pull \${weatherapp_prodsrv}:\${weatherapp_prodsrv}'
-                        ssh -o StrictHostKeyChecking=no -i \${SSH_KEY} \${root}@\${ec2IP} 'docker stop \${weatherapp_prodsrv} || true && docker rm \${weatherapp_prodsrv} || true'
-                        ssh -o StrictHostKeyChecking=no -i \${SSH_KEY} \${root}@\${ec2IP} 'docker run -d --name \${weatherapp_prodsrv} -p 80:80 \${weatherapp_prodsrv}:\${weatherapp_prodsrv}' 
-                        """
-                    }
+                    REMOTE_HOST = '52.14.216.119'
+                    REMOTE_USER = 'root'
+                    REMOTE_SSH_KEY = credentials('00adf693162fa12dd')
+                    DOCKER_IMAGE_NAME = 'gayathrija/weatherappdev:${buildVersion}'
+                    DOCKER_CONTAINER_NAME = 'gayathrija/weatherappdev'
                 }
+                    sh """
+                        ssh -o StrictHostKeyChecking=no -i ${REMOTE_SSH_KEY} ${REMOTE_USER}@${REMOTE_HOST} '
+                            docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true;
+                            docker pull ${DOCKER_IMAGE_NAME}:${buildVersion};
+                            docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}:${buildVersion}'
+                    """
             }
-        }       
+        }
     }        
 }
