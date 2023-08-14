@@ -63,6 +63,7 @@ pipeline {
                     DOCKER_IMAGE_NAME = "gayathrija/weatherappdev:${buildVersion}"
                     DOCKER_CONTAINER_NAME = 'gayathrija_weatherappdev'        
                 }
+                    {
                 withCredentials([[
                     credentialsId: 'aws-jenkins-weatherapp',
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID'
@@ -75,9 +76,10 @@ pipeline {
                         docker pull ${DOCKER_IMAGE_NAME}; \
                         docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}"
                 '''
-            }
-        }
+                    }
+                }
 
-    }        
-}
+            }        
+        }
+    }
 }
