@@ -23,7 +23,7 @@ pipeline {
                 }
 
                 // Build your Docker image with the version number
-                sh "sudo docker build -t gayathrija/weatherappdev:${buildVersion} ."
+                sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
             }
         }
 
