@@ -72,9 +72,9 @@ pipeline {
 
                 sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
                 
-                       sh "ssh -i weatherapp.pem root@ec2-52-14-216-119.us-east-2.compute.amazonaws.com 'docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true'"
-                       sh "ssh -i weatherapp.pem root@ec2-52-14-216-119.us-east-2.compute.amazonaws.com 'docker pull ${DOCKER_IMAGE_NAME}'"
-                       sh "ssh -i weatherapp.pem root@ec2-52-14-216-119.us-east-2.compute.amazonaws.com 'docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}'"
+                       sh "ssh -i root@ec2-52-14-216-119.us-east-2.compute.amazonaws.com 'docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true'"
+                       sh "ssh -i root@ec2-52-14-216-119.us-east-2.compute.amazonaws.com 'docker pull ${DOCKER_IMAGE_NAME}'"
+                       sh "ssh -i root@ec2-52-14-216-119.us-east-2.compute.amazonaws.com 'docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}'"
                 }
             }        
         }
