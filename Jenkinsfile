@@ -74,7 +74,7 @@ pipeline {
                 
                        sh "docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true;"
                        sh "docker pull ${DOCKER_IMAGE_NAME};"
-                       sh "docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME};"
+                       sh "docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}"
                 }
             }        
         }
