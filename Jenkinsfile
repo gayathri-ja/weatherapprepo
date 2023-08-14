@@ -61,7 +61,10 @@ pipeline {
                     DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
                     DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
                     DOCKER_IMAGE_NAME = "gayathrija/weatherappdev:${buildVersion}"
-                    DOCKER_CONTAINER_NAME = 'gayathrija_weatherappdev'        
+                    DOCKER_CONTAINER_NAME = 'gayathrija_weatherappdev' 
+                    REMOTE_HOST = '18.116.65.96'
+                    REMOTE_USER = 'root'
+                    REMOTE_SSH_KEY = credentials('00adf693162fa12dd')       
                 }
                 
                 withCredentials([[
@@ -72,9 +75,12 @@ pipeline {
 
                 sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
                 
-                       sh "docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true;"
-                       sh "docker pull ${DOCKER_IMAGE_NAME};"
-                       sh "docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}"
+                sh '''
+                    ssh -o StrictHostKeyChecking=no -i "${REMOTE_SSH_KEY}" ${REMOTE_USER}@${REMOTE_HOST} \
+                        "docker stop ${DOCKER_CONTAINER_NAME} || true && docker rm ${DOCKER_CONTAINER_NAME} || true; \
+                        docker pull ${DOCKER_IMAGE_NAME}; \
+                        docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}"
+                '''
                 
                 }
             }
