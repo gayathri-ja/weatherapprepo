@@ -66,7 +66,7 @@ pipeline {
                 sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
             
                 // Deploy using SSH and Docker
-                sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:80 gayathrija/weatherappdev:${dockerImageTag}'"
+                sh "docker run -d -p ${instancePort}:80 gayathrija/weatherappdev:${dockerImageTag}"
                 }
             }        
         }
