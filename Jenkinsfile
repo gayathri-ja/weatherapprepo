@@ -76,6 +76,7 @@ pipeline {
                     // Deploy using SSH and Docker
                     sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
 
+                }
             }
         }
     }
