@@ -2,7 +2,9 @@ def buildVersion
 
 pipeline {
     agent any
-
+    options {
+        timeout(time: 5, unit: 'MINUTES')
+    
     stages {
         stage('Checkout') {
             steps {
@@ -53,37 +55,28 @@ pipeline {
             }
         }
 
-stage('Deploy') {
+        stage('Deploy') {
 
-    steps {
+            steps {
 
-        echo "Deploy..."
+                echo "Deploy..."
 
-        //script {
+                script {
 
-            // Define variables
+                    // Define variables
 
-          //  instancePublicIP = '18.116.65.96'
+                    instancePublicIP = '18.116.65.96'
+                    instancePort = '8088'
+                    dockerImageTag = "${buildVersion}"
+                }
 
-            //instancePort = '8088'
+                    // Pull the Docker image from Docker Hub
+                    sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
 
-            //dockerImageTag = "${buildVersion}"
-        //}
+                    // Deploy using SSH and Docker
+                    sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
 
-           
-
-            // Pull the Docker image from Docker Hub
-
-            sh "docker pull gayathrija/weatherappdev:${buildVersion}"
-
-           
-
-            // Deploy using SSH and Docker
-
-            // sh "ssh root@${instancePublicIP} -p ${instancePort} '
-            sh "docker run -d -p 8088:8080 gayathrija/weatherappdev:${buildVersion}"
-
-    }
-    }
+            }
+        }
     }
 }
