@@ -53,25 +53,51 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo "Deploy..."
-                script {
-                    // Define variables
-                    //def instancePublicIP = '18.116.65.96'
-                    //def instancePort = '8088'
-                    //def dockerImageTag = "${buildVersion}"
-            
-                } // Pull the Docker image from Docker Hub
-                sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
-            
-                // Deploy using SSH and Docker
-               // sh "docker stop gayathrija/weatherappdev:latest"
-               // sh "docker rm gayathrija/weatherappdev:latest"
-                    
-                sh "docker run -d -p 8088:8080 gayathrija/weatherappdev:${buildVersion}"
-                
-            }        
+stage('Deploy') {
+    steps {
+        echo "Deploy..."
+        script {
+            // Define variables
+            def instancePublicIP = '3.143.209.159'
+            def instancePort = '8080'
+            def dockerImageTag = "${buildVersion}"
+
+            // Pull the Docker image from Docker Hub
+            sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
+
+            // Deploy using SSH and Docker
+            sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${8080}:80 gayathrija/weatherappdev:${dockerImageTag}'"
+
+stage('Deploy') {
+
+    steps {
+
+        echo "Deploy..."
+
+        script {
+
+            // Define variables
+
+            def instancePublicIP = '18.116.65.96'
+
+            def instancePort = '8088'
+
+            def dockerImageTag = "${buildVersion}"
         }
+
+           
+
+            // Pull the Docker image from Docker Hub
+
+            sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
+
+           
+
+            // Deploy using SSH and Docker
+
+            sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
+
+    }
+    }
     }
 }
