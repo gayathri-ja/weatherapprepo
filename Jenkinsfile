@@ -66,8 +66,8 @@ pipeline {
                 sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
             
                 // Deploy using SSH and Docker
-                sh "docker stop gayathrija/weatherappdev:latest"
-                sh "docker rm gayathrija/weatherappdev:latest"
+               // sh "docker stop gayathrija/weatherappdev:latest"
+               // sh "docker rm gayathrija/weatherappdev:latest"
                     
                 sh "docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}"
                 }
