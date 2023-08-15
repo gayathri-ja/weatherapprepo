@@ -58,7 +58,7 @@ pipeline {
                 echo "Deploy..."
                 script {
                     // Define variables
-                    def instancePublicIP = '3.143.209.159'
+                    def instancePublicIP = '18.116.65.96'
                     def instancePort = '8080'
                     def dockerImageTag = "${buildVersion}"
             
