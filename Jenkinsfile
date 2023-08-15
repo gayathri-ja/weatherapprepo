@@ -59,16 +59,16 @@ stage('Deploy') {
 
         echo "Deploy..."
 
-        script {
+        //script {
 
             // Define variables
 
-            instancePublicIP = '18.116.65.96'
+          //  instancePublicIP = '18.116.65.96'
 
-            instancePort = '8088'
+            //instancePort = '8088'
 
-            dockerImageTag = "${buildVersion}"
-        }
+            //dockerImageTag = "${buildVersion}"
+        //}
 
            
 
@@ -80,7 +80,8 @@ stage('Deploy') {
 
             // Deploy using SSH and Docker
 
-            sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
+            // sh "ssh root@${instancePublicIP} -p ${instancePort} '
+            sh "docker run -d -p 8088:8080 gayathrija/weatherappdev:${buildVersion}"
 
     }
     }
