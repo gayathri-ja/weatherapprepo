@@ -69,7 +69,7 @@ pipeline {
                // sh "docker stop gayathrija/weatherappdev:latest"
                // sh "docker rm gayathrija/weatherappdev:latest"
                     
-                sh "docker run -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}"
+                sh "docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}"
                 }
             }        
         }
