@@ -18,7 +18,7 @@ pipeline {
                     branch: 'main'
             }
         }
-//t54t4
+
         stage('Build') {
             steps {
                 echo "Build..."
