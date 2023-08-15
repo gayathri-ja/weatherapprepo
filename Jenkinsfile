@@ -22,7 +22,7 @@ pipeline {
                     buildVersion = new Date().format('yyyyMMdd-HHmmss')
                 }
 
-                // Build your Docker image with the version number
+                // Build your Docker image with the version number.
                 sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
             }
         }
