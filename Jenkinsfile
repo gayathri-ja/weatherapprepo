@@ -63,11 +63,11 @@ stage('Deploy') {
 
             // Define variables
 
-            def instancePublicIP = '18.116.65.96'
+            instancePublicIP = '18.116.65.96'
 
-            def instancePort = '8088'
+            instancePort = '8088'
 
-            def dockerImageTag = "${buildVersion}"
+            dockerImageTag = "${buildVersion}"
         }
 
            
