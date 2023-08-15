@@ -74,7 +74,7 @@ stage('Deploy') {
 
             // Pull the Docker image from Docker Hub
 
-            sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
+            sh "docker pull gayathrija/weatherappdev:${buildVersion}"
 
            
 
