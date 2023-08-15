@@ -23,7 +23,7 @@ pipeline {
                 }
 
                 // Build your Docker image with the version number.
-                sh "sudo docker build -t gayathrija/weatherappdev:${buildVersion} ."
+                sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
             }
         }
 
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 echo "Unit Test..."
                 // Run your unit tests inside the Docker container
-                sh "sudo docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
+                sh "docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
             }
         }
 
@@ -45,10 +45,10 @@ pipeline {
                 }
 
                 // Log in to Docker Hub using the credentials
-                sh "sudo docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
+                sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
 
                 // Push the Docker image to a container registry
-                sh "sudo docker push gayathrija/weatherappdev:${buildVersion}"
+                sh "docker push gayathrija/weatherappdev:${buildVersion}"
 
             }
         }
@@ -63,13 +63,13 @@ pipeline {
                     def dockerImageTag = "${buildVersion}"
             
                 // Pull the Docker image from Docker Hub
-                sh "sudo docker pull gayathrija/weatherappdev:${dockerImageTag}"
+                sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
             
                 // Deploy using SSH and Docker
-               // sh "sudo docker stop gayathrija/weatherappdev:latest"
-               // sh "sudo docker rm gayathrija/weatherappdev:latest"
+               // sh "docker stop gayathrija/weatherappdev:latest"
+               // sh "docker rm gayathrija/weatherappdev:latest"
                     
-                sh "sudo docker run -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}"
+                sh "docker run -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}"
                 }
             }        
         }
