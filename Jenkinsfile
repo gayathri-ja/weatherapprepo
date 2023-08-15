@@ -1,12 +1,7 @@
 def buildVersion
 
 pipeline {
-    agent {
-        docker {
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket to access the host's Docker daemon
-        }
-          
-    }
+    agent any
 
     stages {
         stage('Checkout') {
