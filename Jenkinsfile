@@ -2,10 +2,7 @@ def buildVersion
 
 pipeline {
     agent any
-    options {
-        timeout(time: 5, unit: 'MINUTES')
-    }
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -56,28 +53,14 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-
+        stage('Deploy') {   
             steps {
-
-                echo "Deploy..."
-
-                script {
-
-                    // Define variables
-
-                    instancePublicIP = '18.116.65.96'
-                    instancePort = '8088'
-                    dockerImageTag = "${buildVersion}"
-                }
-
-                    // Pull the Docker image from Docker Hub
-                    sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
-
-                    // Deploy using SSH and Docker
-                    sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
-
-                }
-            }
-        }
+            echo "Deploy..."
+                    sshagent(['aws-jenkins-weatherapp']) {
+                    sh "ssh -tt -o StrictHostKeyChecking=no root@18.116.65.96;" 
+                    sh "docker run -d -p 80:8080 gayathrija/weatherappdev:${buildVersion}"
     }
+    }
+    }
+}
+}
