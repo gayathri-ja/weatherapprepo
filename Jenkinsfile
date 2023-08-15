@@ -59,7 +59,7 @@ pipeline {
                 script {
                     // Define variables
                     def instancePublicIP = '18.116.65.96'
-                    def instancePort = '8080'
+                    def instancePort = '8081'
                     def dockerImageTag = "${buildVersion}"
             
                 // Pull the Docker image from Docker Hub
