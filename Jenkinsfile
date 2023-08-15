@@ -57,22 +57,16 @@ pipeline {
             steps {
                 echo "Deploy..."
                 script {
-                    DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
-                    DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
-                    DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
-                    DOCKER_IMAGE_NAME = "gayathrija/weatherappdev:${buildVersion}"
-                    DOCKER_CONTAINER_NAME = 'gayathrija_weatherappdev'        
-                }
-                
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-jenkins-weatherapp',
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-
-                sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
-                       sh "docker pull ${DOCKER_IMAGE_NAME};"
-                       sh "docker run -d --name ${DOCKER_CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE_NAME}"
+                    // Define variables
+                    def instancePublicIP = '3.143.209.159'
+                    def instancePort = '8080'
+                    def dockerImageTag = "${buildVersion}"
+            
+                // Pull the Docker image from Docker Hub
+                sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
+            
+                // Deploy using SSH and Docker
+                sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:80 gayathrija/weatherappdev:${dockerImageTag}'"
                 }
             }        
         }
