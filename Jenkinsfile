@@ -83,5 +83,20 @@ pipeline {
                     sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
             }
         }
+
+        post {
+            always {
+                cleanWs()
+                dir("${env.WORKSPACE}@tmp") {
+                deleteDir()
+                }
+                dir("${env.WORKSPACE}@script") {
+                deleteDir()
+                }
+                dir("${env.WORKSPACE}@script@tmp") {
+                deleteDir()
+                }
+            }
+        }
     }
 }
