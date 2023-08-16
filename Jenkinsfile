@@ -69,17 +69,17 @@ pipeline {
 
                  script {
 
-                     Define variables
+                 //    Define variables
 
                      instancePublicIP = '18.116.65.96'
                      instancePort = '8088'
                      dockerImageTag = "${buildVersion}"
                 }
 
-                     Pull the Docker image from Docker Hub
+                 //    Pull the Docker image from Docker Hub
                      sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
 
-                     Deploy using SSH and Docker
+                 //    Deploy using SSH and Docker
                      sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
              }
         }
