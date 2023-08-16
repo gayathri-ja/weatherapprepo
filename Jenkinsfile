@@ -60,27 +60,27 @@ pipeline {
 
         stage('Deploy') {   
             steps {
-             echo "Deploy..."
-                     sshagent(['74fa382e-071e-48dd-9add-f5901d0a2959']) {
-                     sh "ssh -tt -o StrictHostKeyChecking=no root@18.116.65.96" 
-                     sh "docker run -d -p 80:8088 gayathrija/weatherappdev:${buildVersion}"
+             // echo "Deploy..."
+                     // sshagent(['74fa382e-071e-48dd-9add-f5901d0a2959']) {
+                     // sh "ssh -tt -o StrictHostKeyChecking=no root@18.116.65.96" 
+                     // sh "docker run -d -p 80:8088 gayathrija/weatherappdev:${buildVersion}"
 
-                // echo "Deploy..."
+                 echo "Deploy..."
 
-                // script {
+                 script {
 
-                    // Define variables
+                     Define variables
 
-                    // instancePublicIP = '18.116.65.96'
-                    // instancePort = '8088'
-                    // dockerImageTag = "${buildVersion}"
+                     instancePublicIP = '18.116.65.96'
+                     instancePort = '8088'
+                     dockerImageTag = "${buildVersion}"
                 }
 
-                    // Pull the Docker image from Docker Hub
-                    // sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
+                     Pull the Docker image from Docker Hub
+                     sh "docker pull gayathrija/weatherappdev:${dockerImageTag}"
 
-                    // Deploy using SSH and Docker
-                    // sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
+                     Deploy using SSH and Docker
+                     sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
              }
         }
 
