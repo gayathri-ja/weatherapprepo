@@ -85,7 +85,7 @@ pipeline {
         }
 
         stage('post'){
-            always {
+            steps {
                 cleanWs()
                 dir("${env.WORKSPACE}@tmp") {
                 deleteDir()
