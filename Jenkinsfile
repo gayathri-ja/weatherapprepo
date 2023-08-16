@@ -10,7 +10,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checkout..."
-                cleanWs()
                 // Checkout your source code from version control
                 git url: 'https://github.com/gayathri-ja/weatherapprepo.git', 
                     credentialsId: '1b5ef133-eaa9-4d11-97c5-82329c8aa60c',
@@ -21,6 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build..."
+                cleanWs()
                 // Generate a timestamp-based version number for the Docker image.
                 script {
                     buildVersion = new Date().format('yyyyMMdd-HHmmss')
