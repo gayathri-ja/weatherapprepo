@@ -10,6 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checkout..."
+                cleanWs()
                 // Checkout your source code from version control
                 git url: 'https://github.com/gayathri-ja/weatherapprepo.git', 
                     credentialsId: '1b5ef133-eaa9-4d11-97c5-82329c8aa60c',
@@ -69,9 +70,9 @@ pipeline {
 
                     // Define variables
 
-                    def instancePublicIP = '18.116.65.96'
-                    def instancePort = '8088'
-                    def dockerImageTag = "${buildVersion}"
+                    instancePublicIP = '18.116.65.96'
+                    instancePort = '8088'
+                    dockerImageTag = "${buildVersion}"
                 }
 
                     // Pull the Docker image from Docker Hub
