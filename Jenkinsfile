@@ -20,14 +20,15 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build..."
-                cleanWs()
+                agent {
+                    Dockerfile true
+                }
                 // Generate a timestamp-based version number for the Docker image.
                 script {
                     buildVersion = new Date().format('yyyyMMdd-HHmmss')
+                    // Build your Docker image with the version number.
+                    sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
                 }
-
-                // Build your Docker image with the version number.
-                sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
             }
         }
 
