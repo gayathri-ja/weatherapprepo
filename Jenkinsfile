@@ -77,10 +77,10 @@ pipeline {
                 }
 
                  //    Pull the Docker image from Docker Hub
-                     sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker pull gayathrija/weatherappdev:${dockerImageTag}'"
+                     sh "ssh ec2-user@${instancePublicIP} -p ${instancePort} 'docker pull gayathrija/weatherappdev:${dockerImageTag}'"
 
                  //    Deploy using SSH and Docker
-                     sh "ssh root@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
+                     sh "ssh ec2-user@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
              }
         }
 
