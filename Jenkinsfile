@@ -21,7 +21,7 @@ pipeline {
                 echo "Build..."
                 script {
                     buildVersion = new Date().format('yyyyMMdd-HHmmss')
-                    sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
+                    sh "sudo docker build -t gayathrija/weatherappdev:${buildVersion} ."
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
         stage('Unit Test') {
             steps {
                 echo "Unit Test..."
-                sh "docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
+                sh "sudo docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
             }
         }
 
@@ -42,8 +42,8 @@ pipeline {
                     DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
                 }
 
-                sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
-                sh "docker push gayathrija/weatherappdev:${buildVersion}"
+                sh "sudo docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
+                sh "sudo docker push gayathrija/weatherappdev:${buildVersion}"
             }
         }
 
@@ -54,8 +54,8 @@ pipeline {
                 // Authenticate with SSH key
                 sshagent(credentials: ['credprod']) {
                     // SSH commands to pull and run Docker image on the remote server
-                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'docker pull gayathrija/weatherappdev:${buildVersion}'"
-                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
+                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker pull gayathrija/weatherappdev:${buildVersion}'"
+                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
                 }
             }
         }
