@@ -61,7 +61,7 @@ pipeline {
                                // sshCommand remote: remoteServer, command: '''
                                   sh "sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:latest"
                                  // # Add your script commands here
-                                '''
+                                // '''
                 // // Authenticate with SSH key
                 // sshagent(credentials: ['credprod']) {
                 //     // SSH commands to pull and run Docker image on the remote server
