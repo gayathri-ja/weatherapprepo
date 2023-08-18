@@ -49,13 +49,26 @@ pipeline {
 
         stage('Deploy') {   
             steps {
-                echo "Deploy..."
+                 echo "Deploy..."
+                      script {
+                            def remoteServer = [:]
+                                remoteServer.name = 'jenkintest'
+                                remoteServer.host = '4.206.177.39'
+                                remoteServer.user = 'jenk'
+                                remoteServer.allowAnyHosts = true
+                                remoteServer.password = 'Jenk@1234567'
 
-                // Authenticate with SSH key
-                sshagent(credentials: ['credprod']) {
-                    // SSH commands to pull and run Docker image on the remote server
-                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker pull gayathrija/weatherappdev:${buildVersion}'"
-                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
+                                sshCommand remote: remoteServer, command: '''
+                                  #!/bin/bash
+                                  sudo docker pull gayathrija/weatherappdev:${buildVersion}
+                                  sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}
+                                  # Add your script commands here
+                                '''
+                // // Authenticate with SSH key
+                // sshagent(credentials: ['credprod']) {
+                //     // SSH commands to pull and run Docker image on the remote server
+                //     sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker pull gayathrija/weatherappdev:${buildVersion}'"
+                //     sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
                 }
             }
         }
