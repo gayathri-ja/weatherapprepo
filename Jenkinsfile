@@ -50,46 +50,17 @@ pipeline {
         stage('Deploy') {   
             steps {
                  echo "Deploy..."
-                      //script {
-                        //    def remoteServer = [:]
-                          //      remoteServer.name = 'jenkintest'
-                            //    remoteServer.host = '4.206.177.39'
-                              //  remoteServer.user = 'jenk'
-                                //remoteServer.allowAnyHosts = true
-                              //  remoteServer.password = 'Jenk@1234567'
 
-                               // sshCommand remote: remoteServer, command: '''
                                   sh "sudo docker stop \$(sudo docker ps -aq)" // stopping the containers
-                                  sh "sudo lsof -i :8085 | awk 'NR>1 {print \$2}' | xargs -r sudo kill"
+                                  sh "sudo lsof -i :8085 | awk 'NR>1 {print \$2}' | xargs -r sudo kill" // kill the process currently using the port 8085
                                   
                                   sh "sudo docker pull gayathrija/weatherappdev:${buildVersion}"
                                   sh "sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}"
-                                 // # Add your script commands here
-                                // '''
-                // // Authenticate with SSH key
-                // sshagent(credentials: ['credprod']) {
-                //     // SSH commands to pull and run Docker image on the remote server
-                //     sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker pull gayathrija/weatherappdev:${buildVersion}'"
-                //     sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
-                //}
+
+
             }
         }
 
-       // stage(post) {
-         //   steps {
-           //     always {
-                    // cleanWs()
-                    // dir("Weatherapp-pipeline@tmp") {
-                    // deleteDir()
-                    // }
-                    // dir("Weatherapp-pipeline@script") {
-                    // deleteDir()
-                    // }
-                    // dir("Weatherapp-pipeline@script@tmp") {
-                    // deleteDir()
-                    // }
-              //  }
-           // }
-        //}
+
     }
 }
