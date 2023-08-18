@@ -64,13 +64,13 @@ pipeline {
             steps {
                 always {
                     cleanWs()
-                    dir("${env.WORKSPACE}@tmp") {
+                    dir("Weatherapp-pipeline@tmp") {
                     deleteDir()
                     }
-                    dir("${env.WORKSPACE}@script") {
+                    dir("Weatherapp-pipeline@script") {
                     deleteDir()
                     }
-                    dir("${env.WORKSPACE}@script@tmp") {
+                    dir("Weatherapp-pipeline@script@tmp") {
                     deleteDir()
                     }
                 }
