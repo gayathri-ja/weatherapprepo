@@ -52,7 +52,7 @@ pipeline {
                 echo "Deploy..."
 
                 // Pull the Docker image from Docker Hub
-                sh "ssh jenkins@18.222.116.155 docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}"
+                sh "docker -H ssh://jenkins@18.222.116.155 'docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
             }
         }
 
