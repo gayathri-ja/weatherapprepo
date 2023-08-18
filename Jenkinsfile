@@ -59,8 +59,9 @@ pipeline {
                               //  remoteServer.password = 'Jenk@1234567'
 
                                // sshCommand remote: remoteServer, command: '''
-                                  sh "sudo docker stop $(sudo docker ps -aq)"
-                                  sh "sudo lsof -i :8085 | awk 'NR>1 {print $2}' | xargs -r sudo kill"
+                                  sh "sudo docker stop \$(sudo docker ps -aq)" // stopping the containers
+                                  sh "sudo lsof -i :8085 | awk 'NR>1 {print \$2}' | xargs -r sudo kill"
+                                  
                                   sh "sudo docker pull gayathrija/weatherappdev:${buildVersion}"
                                   sh "sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}"
                                  // # Add your script commands here
