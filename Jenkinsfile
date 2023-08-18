@@ -59,8 +59,8 @@ pipeline {
                                 remoteServer.password = 'Jenk@1234567'
 
                                 sshCommand remote: remoteServer, command: '''
-                                  sudo docker pull gayathrija/weatherappdev:${buildVersion}
-                                  sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}
+                                  // docker pull gayathrija/weatherappdev:${buildVersion}
+                                  docker run -d -p 8085:8080 gayathrija/weatherappdev:20230818-061627
                                   # Add your script commands here
                                 '''
                 // // Authenticate with SSH key
