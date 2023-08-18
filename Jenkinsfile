@@ -60,7 +60,7 @@ pipeline {
         //     }
         // }
 
-        post {
+        stage(post) {
             always {
                 cleanWs()
                 dir("${env.WORKSPACE}@tmp") {
