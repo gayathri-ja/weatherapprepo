@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('Unit Test') {
+        stage('Test') {
             steps {
                 echo "Unit Test..."
                 sh "sudo docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
