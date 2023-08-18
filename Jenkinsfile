@@ -60,10 +60,10 @@ pipeline {
             }
         }
 
-        stage('Post') {
-            steps {
-                cleanWs()
-            }
-        }
+        // stage('Post') {
+        //     steps {
+        //         cleanWs()
+        //     }
+        // }
     }
 }
