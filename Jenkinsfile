@@ -50,30 +50,30 @@ pipeline {
         stage('Deploy') {   
             steps {
                  echo "Deploy..."
-                      script {
-                            def remoteServer = [:]
-                                remoteServer.name = 'jenkintest'
-                                remoteServer.host = '4.206.177.39'
-                                remoteServer.user = 'jenk'
-                                remoteServer.allowAnyHosts = true
-                                remoteServer.password = 'Jenk@1234567'
+                      //script {
+                        //    def remoteServer = [:]
+                          //      remoteServer.name = 'jenkintest'
+                            //    remoteServer.host = '4.206.177.39'
+                              //  remoteServer.user = 'jenk'
+                                //remoteServer.allowAnyHosts = true
+                              //  remoteServer.password = 'Jenk@1234567'
 
-                                sshCommand remote: remoteServer, command: '''
-                                  docker run -d -p 8085:8080 gayathrija/weatherappdev:20230818-061627
-                                  # Add your script commands here
+                               // sshCommand remote: remoteServer, command: '''
+                                  sh "sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}"
+                                 // # Add your script commands here
                                 '''
                 // // Authenticate with SSH key
                 // sshagent(credentials: ['credprod']) {
                 //     // SSH commands to pull and run Docker image on the remote server
                 //     sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker pull gayathrija/weatherappdev:${buildVersion}'"
                 //     sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
-                }
+                //}
             }
         }
 
-        stage(post) {
-            steps {
-                always {
+       // stage(post) {
+         //   steps {
+           //     always {
                     // cleanWs()
                     // dir("Weatherapp-pipeline@tmp") {
                     // deleteDir()
@@ -84,8 +84,8 @@ pipeline {
                     // dir("Weatherapp-pipeline@script@tmp") {
                     // deleteDir()
                     // }
-                }
-            }
-        }
+              //  }
+           // }
+        //}
     }
 }
