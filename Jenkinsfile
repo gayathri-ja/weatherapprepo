@@ -67,20 +67,20 @@ pipeline {
 
                  echo "Deploy..."
 
-                 script {
+                 //script {
 
                  //    Define variables
 
-                     instancePublicIP = '18.116.65.96'
-                     instancePort = '8088'
-                     dockerImageTag = "${buildVersion}"
-                }
+                   //  instancePublicIP = '18.116.65.96'
+                     //instancePort = '8088'
+                     //dockerImageTag = "${buildVersion}"
+                //}
 
                  //    Pull the Docker image from Docker Hub
-                     sh "ssh ec2-user@${instancePublicIP} -p ${instancePort} 'docker pull gayathrija/weatherappdev:${dockerImageTag}'"
+                     sh "docker -H ssh://jenkins@18.222.116.155 run -d -p 8085:8080 gayathrija/weatherappdev:${dockerImageTag}"
 
                  //    Deploy using SSH and Docker
-                     sh "ssh ec2-user@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
+                   //  sh "ssh ec2-user@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
              }
         }
 
