@@ -51,8 +51,12 @@ pipeline {
             steps {
                 echo "Deploy..."
 
-                // Pull the Docker image from Docker Hub
-                sh "docker -H ssh://jenkins@18.222.116.155 'docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
+                // Authenticate with SSH key
+                sshagent(credentials: ['credprod']) {
+                    // SSH commands to pull and run Docker image on the remote server
+                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'docker pull gayathrija/weatherappdev:${buildVersion}'"
+                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
+                }
             }
         }
 
