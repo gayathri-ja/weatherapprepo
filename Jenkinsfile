@@ -61,16 +61,18 @@ pipeline {
         // }
 
         stage(post) {
-            always {
-                cleanWs()
-                dir("${env.WORKSPACE}@tmp") {
-                deleteDir()
-                }
-                dir("${env.WORKSPACE}@script") {
-                deleteDir()
-                }
-                dir("${env.WORKSPACE}@script@tmp") {
-                deleteDir()
+            steps {
+                always {
+                    cleanWs()
+                    dir("${env.WORKSPACE}@tmp") {
+                    deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script") {
+                    deleteDir()
+                    }
+                    dir("${env.WORKSPACE}@script@tmp") {
+                    deleteDir()
+                    }
                 }
             }
         }
