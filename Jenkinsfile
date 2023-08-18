@@ -10,7 +10,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checkout..."
-                // Checkout your source code from version control
                 git url: 'https://github.com/gayathri-ja/weatherapprepo.git', 
                     credentialsId: '1b5ef133-eaa9-4d11-97c5-82329c8aa60c',
                     branch: 'main'
@@ -20,13 +19,8 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build..."
-                agent {
-                    Dockerfile true
-                }
-                // Generate a timestamp-based version number for the Docker image..
                 script {
                     buildVersion = new Date().format('yyyyMMdd-HHmmss')
-                    // Build your Docker image with the version number.
                     sh "docker build -t gayathrija/weatherappdev:${buildVersion} ."
                 }
             }
@@ -35,7 +29,6 @@ pipeline {
         stage('Unit Test') {
             steps {
                 echo "Unit Test..."
-                // Run your unit tests inside the Docker container
                 sh "docker run --rm gayathrija/weatherappdev:${buildVersion} pytest test_app.py"
             }
         }
@@ -49,54 +42,24 @@ pipeline {
                     DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
                 }
 
-                // Log in to Docker Hub using the credentials
                 sh "docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
-
-                // Push the Docker image to a container registry
                 sh "docker push gayathrija/weatherappdev:${buildVersion}"
-
             }
         }
 
         stage('Deploy') {   
             steps {
-             // echo "Deploy..."
-                     // sshagent(['74fa382e-071e-48dd-9add-f5901d0a2959']) {
-                     // sh "ssh -tt -o StrictHostKeyChecking=no root@18.116.65.96" 
-                     // sh "docker run -d -p 80:8088 gayathrija/weatherappdev:${buildVersion}"
+                echo "Deploy..."
 
-                 echo "Deploy..."
-
-                 //script {
-
-                 //    Define variables
-
-                   //  instancePublicIP = '18.116.65.96'
-                     //instancePort = '8088'
-                     //dockerImageTag = "${buildVersion}"
-                //}
-
-                 //    Pull the Docker image from Docker Hub
-                     sh "docker -H ssh://jenkins@18.222.116.155 run -d -p 8085:8080 gayathrija/weatherappdev:${dockerImageTag}"
-
-                 //    Deploy using SSH and Docker
-                   //  sh "ssh ec2-user@${instancePublicIP} -p ${instancePort} 'docker run -d -p ${instancePort}:8080 gayathrija/weatherappdev:${dockerImageTag}'"
-             }
+                // Pull the Docker image from Docker Hub
+                sh "ssh jenkins@18.222.116.155 docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}"
+            }
         }
 
-        stage('post'){
+        stage('Post') {
             steps {
                 cleanWs()
-                dir("${env.WORKSPACE}@tmp") {
-                deleteDir()
-                }
-                dir("${env.WORKSPACE}@script") {
-                deleteDir()
-                }
-                dir("${env.WORKSPACE}@script@tmp") {
-                deleteDir()
-                }
             }
-        
-    
-}}
+        }
+    }
+}
