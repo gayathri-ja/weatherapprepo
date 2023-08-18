@@ -63,7 +63,7 @@ pipeline {
         stage(post) {
             steps {
                 always {
-                    cleanWs()
+                    // cleanWs()
                     // dir("Weatherapp-pipeline@tmp") {
                     // deleteDir()
                     // }
@@ -72,7 +72,7 @@ pipeline {
                     // }
                     // dir("Weatherapp-pipeline@script@tmp") {
                     // deleteDir()
-                    }
+                    // }
                 }
             }
         }
