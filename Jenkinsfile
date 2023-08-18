@@ -64,14 +64,14 @@ pipeline {
             steps {
                 always {
                     cleanWs()
-                    dir("Weatherapp-pipeline@tmp") {
-                    deleteDir()
-                    }
-                    dir("Weatherapp-pipeline@script") {
-                    deleteDir()
-                    }
-                    dir("Weatherapp-pipeline@script@tmp") {
-                    deleteDir()
+                    // dir("Weatherapp-pipeline@tmp") {
+                    // deleteDir()
+                    // }
+                    // dir("Weatherapp-pipeline@script") {
+                    // deleteDir()
+                    // }
+                    // dir("Weatherapp-pipeline@script@tmp") {
+                    // deleteDir()
                     }
                 }
             }
