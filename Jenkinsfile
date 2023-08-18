@@ -33,32 +33,32 @@ pipeline {
             }
         }
 
-        // stage('Push') {
-        //     steps {
-        //         echo "Push..."
-        //         script {
-        //             DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
-        //             DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
-        //             DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
-        //         }
+        stage('Push') {
+            steps {
+                echo "Push..."
+                script {
+                    DOCKERHUB_CREDENTIALS = credentials('ac643925-fe10-4d90-899c-4282fae6dc00')
+                    DOCKERHUB_CREDENTIALS_USR = 'gayathrija'
+                    DOCKERHUB_CREDENTIALS_PSW = 'dckr_pat_NlvLmQpfODLrHLb2SALVuKOf4lI'
+                }
 
-        //         sh "sudo docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
-        //         sh "sudo docker push gayathrija/weatherappdev:${buildVersion}"
-        //     }
-        // }
+                sh "sudo docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW"
+                sh "sudo docker push gayathrija/weatherappdev:${buildVersion}"
+            }
+        }
 
-        // stage('Deploy') {   
-        //     steps {
-        //         echo "Deploy..."
+        stage('Deploy') {   
+            steps {
+                echo "Deploy..."
 
-        //         // Authenticate with SSH key
-        //         sshagent(credentials: ['credprod']) {
-        //             // SSH commands to pull and run Docker image on the remote server
-        //             sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker pull gayathrija/weatherappdev:${buildVersion}'"
-        //             sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
-        //         }
-        //     }
-        // }
+                // Authenticate with SSH key
+                sshagent(credentials: ['credprod']) {
+                    // SSH commands to pull and run Docker image on the remote server
+                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker pull gayathrija/weatherappdev:${buildVersion}'"
+                    sh "ssh -o StrictHostKeyChecking=no jenk@18.222.116.155 'sudo docker run -d -p 8085:8080 gayathrija/weatherappdev:${buildVersion}'"
+                }
+            }
+        }
 
         stage(post) {
             steps {
